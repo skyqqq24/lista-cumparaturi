@@ -254,9 +254,9 @@
 
 @media (max-width: 600px) {
     body {
-        align-items: flex-start;
-        padding: 600px 16px 40px;
-        height: auto;
+        align-items: center;
+        padding: 40px 16px 40px;
+        height: 100vh;
         min-height: 100vh;
     }
 
@@ -339,3 +339,4 @@
             border-radius: 22px;
         }
     }
+
