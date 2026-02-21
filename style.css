@@ -255,21 +255,21 @@ li .item-info {
 @media (max-width: 600px) {
     body {
         align-items: flex-start;
-        padding: 80px 14px 40px;
+        padding: 70px 16px 40px;
         height: auto;
         min-height: 100vh;
     }
 
     .container {
         width: 100%;
-        max-width: 620px;
-        padding: 28px 20px;
-        border-radius: 22px;
+        max-width: 560px;
+        padding: 26px 18px;
+        border-radius: 18px;
     }
 
     .input-group {
         grid-template-columns: 1fr;
-        padding: 0;
+        gap: 12px;
     }
 
     .input-group button {
@@ -278,7 +278,7 @@ li .item-info {
 
     h2 {
         font-size: 24px;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
 
     input {
@@ -292,7 +292,7 @@ li .item-info {
     }
 
     li {
-        padding: 14px 16px;
+        padding: 12px 14px;
         font-size: 18px;
     }
 
@@ -308,6 +308,25 @@ li .item-info {
         top: 76px;
         right: 14px;
         min-width: 200px;
+    }
+
+    li .item-info {
+        grid-template-areas:
+            "name remove"
+            "meta meta";
+        gap: 8px;
+    }
+
+    .item-meta {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .badge,
+    .remove-btn {
+        min-height: 40px;
+        padding: 8px 12px;
+        font-size: 14px;
     }
 }
 
