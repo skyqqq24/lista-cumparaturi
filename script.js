@@ -1,10 +1,12 @@
-    const input = document.getElementById("productInput");
-    const addBtn = document.getElementById("addBtn");
-    const list = document.getElementById("shoppingList");
+const input = document.getElementById("productInput");
+const addBtn = document.getElementById("addBtn");
+const list = document.getElementById("shoppingList");
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsPanel = document.getElementById("settingsPanel");
 const gradientSelect = document.getElementById("gradientSelect");
 const container = document.querySelector(".container");
+const quantityInput = document.getElementById("quantityInput");
+const categorySelect = document.getElementById("categorySelect");
 
     addBtn.addEventListener("click", addProduct);
     input.addEventListener("keypress", function(e) {
@@ -122,6 +124,8 @@ if (gradientSelect) {
 
     function addProduct() {
         const product = input.value.trim();
+        const quantity = Math.max(1, parseInt(quantityInput ? quantityInput.value : "1", 10) || 1);
+        const category = categorySelect ? categorySelect.value : "General";
 
         if (product === "") {
             alert("Introdu un produs!");
@@ -130,12 +134,31 @@ if (gradientSelect) {
 
         const li = document.createElement("li");
 
+        const info = document.createElement("div");
+        info.classList.add("item-info");
+
         const span = document.createElement("span");
         span.textContent = product;
 
         span.addEventListener("click", function() {
             span.classList.toggle("completed");
         });
+
+        const meta = document.createElement("div");
+        meta.classList.add("item-meta");
+
+        const qtyBadge = document.createElement("span");
+        qtyBadge.classList.add("badge");
+        qtyBadge.textContent = `x${quantity}`;
+
+        const catBadge = document.createElement("span");
+        catBadge.classList.add("badge", "badge-category");
+        catBadge.textContent = category;
+
+        meta.appendChild(qtyBadge);
+        meta.appendChild(catBadge);
+        info.appendChild(span);
+        info.appendChild(meta);
 
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove";
@@ -145,9 +168,10 @@ if (gradientSelect) {
             li.remove();
         });
 
-        li.appendChild(span);
+        li.appendChild(info);
         li.appendChild(removeBtn);
         list.appendChild(li);
 
         input.value = "";
+        if (quantityInput) quantityInput.value = "1";
     }
