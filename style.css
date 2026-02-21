@@ -160,10 +160,10 @@
         transform: scale(1.1);
     }
 
-    .settings-btn {
-        position: fixed;
-        top: 18px;
-        right: 18px;
+.settings-btn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
         width: 42px;
         height: 42px;
         display: flex;
@@ -174,15 +174,16 @@
         border: none;
         background: rgba(255, 255, 255, 0.85);
         color: #2b2b2b;
-        font-size: 20px;
-        cursor: pointer;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+}
 
-    .settings-panel {
-        position: fixed;
-        top: 70px;
-        right: 18px;
+.settings-panel {
+    position: fixed;
+    top: 70px;
+    right: 18px;
         padding: 12px 14px;
         border-radius: 12px;
         display: none;
@@ -190,9 +191,10 @@
         flex-direction: column;
         background: rgba(255, 255, 255, 0.9);
         color: #1f1f1f;
-        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
-        min-width: 180px;
-    }
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+    min-width: 180px;
+    z-index: 19;
+}
 
     .settings-panel label {
         font-size: 12px;
@@ -339,4 +341,3 @@
             border-radius: 22px;
         }
     }
-
