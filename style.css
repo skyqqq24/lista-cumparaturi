@@ -252,20 +252,21 @@
         color: #0c6f6a;
     }
 
-    @media (max-width: 600px) {
+@media (max-width: 600px) {
     body {
-        align-items: center;
-        padding: 80px 16px 40px;
+        align-items: flex-start;
+        padding: 130px 16px 40px;
         height: auto;
         min-height: 100vh;
     }
 
-        .container {
-            width: 100%;
-            max-width: 560px;
-            padding: 26px 18px;
-            border-radius: 18px;
-        }
+    .container {
+        width: 100%;
+        max-width: 560px;
+        padding: 26px 18px;
+        border-radius: 18px;
+        margin-top: 10px;
+    }
 
         .input-group {
             grid-template-columns: 1fr;
