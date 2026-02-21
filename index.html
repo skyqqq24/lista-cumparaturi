@@ -13,7 +13,8 @@
 <meta name="theme-color" content="#764ba2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/svg+xml" href="icon-192.svg">
+<link rel="apple-touch-icon" href="icon-192.svg">
 </head>
 <body>
     <button id="settingsBtn" class="settings-btn" aria-label="Setări temă">⚙</button>
@@ -34,6 +35,17 @@
 
         <div class="input-group">
             <input type="text" id="productInput" placeholder="Introdu un produs">
+            <input type="number" id="quantityInput" min="1" value="1" aria-label="Cantitate">
+            <select id="categorySelect" aria-label="Categorie">
+                <option value="General">General</option>
+                <option value="Legume">Legume</option>
+                <option value="Fructe">Fructe</option>
+                <option value="Carne">Carne</option>
+                <option value="Lactate">Lactate</option>
+                <option value="Băuturi">Băuturi</option>
+                <option value="Panificație">Panificație</option>
+                <option value="Curățenie">Curățenie</option>
+            </select>
             <button id="addBtn">Adaugă</button>
         </div>
 
