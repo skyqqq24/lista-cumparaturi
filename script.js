@@ -1,4 +1,4 @@
-const input = document.getElementById("productInput");
+\const input = document.getElementById("productInput");
 const addBtn = document.getElementById("addBtn");
 const list = document.getElementById("shoppingList");
 const settingsBtn = document.getElementById("settingsBtn");
@@ -122,7 +122,91 @@ if (gradientSelect) {
     applyGradient(gradientSelect.value);
 }
 
-    function addProduct() {
+function saveList() {
+    const items = Array.from(list.querySelectorAll("li")).map((li) => {
+        const nameEl = li.querySelector(".item-info > span");
+        const qtyEl = li.querySelector(".badge");
+        const catEl = li.querySelector(".badge-category");
+        return {
+            name: nameEl ? nameEl.textContent : "",
+            quantity: qtyEl ? qtyEl.textContent.replace("x", "") : "1",
+            category: catEl ? catEl.textContent : "General",
+            completed: nameEl ? nameEl.classList.contains("completed") : false
+        };
+    });
+    localStorage.setItem("shoppingItems", JSON.stringify(items));
+}
+
+function createItem({ name, quantity, category, completed }) {
+    const li = document.createElement("li");
+
+    const info = document.createElement("div");
+    info.classList.add("item-info");
+
+    const span = document.createElement("span");
+    span.textContent = name;
+    if (completed) {
+        span.classList.add("completed");
+    }
+
+    span.addEventListener("click", function() {
+        span.classList.toggle("completed");
+        saveList();
+    });
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.classList.add("remove-btn");
+
+    removeBtn.addEventListener("click", function() {
+        li.remove();
+        saveList();
+    });
+
+    const meta = document.createElement("div");
+    meta.classList.add("item-meta");
+
+    const qtyBadge = document.createElement("span");
+    qtyBadge.classList.add("badge");
+    qtyBadge.textContent = `x${quantity}`;
+
+    const catBadge = document.createElement("span");
+    catBadge.classList.add("badge", "badge-category");
+    catBadge.textContent = category;
+
+    meta.appendChild(qtyBadge);
+    meta.appendChild(catBadge);
+    info.appendChild(span);
+    info.appendChild(meta);
+    info.appendChild(removeBtn);
+
+    li.appendChild(info);
+    return li;
+}
+
+function loadList() {
+    try {
+        const raw = localStorage.getItem("shoppingItems");
+        if (!raw) return;
+        const items = JSON.parse(raw);
+        if (!Array.isArray(items)) return;
+        items.forEach((item) => {
+            const li = createItem({
+                name: item.name || "",
+                quantity: item.quantity || "1",
+                category: item.category || "General",
+                completed: Boolean(item.completed)
+            });
+            list.appendChild(li);
+        });
+    } catch (error) {
+        // ignore corrupted storage
+    }
+}
+
+loadList();
+
+function addProduct() {
         const product = input.value.trim();
         const quantity = Math.max(1, parseInt(quantityInput ? quantityInput.value : "1", 10) || 1);
         const category = categorySelect ? categorySelect.value : "General";
@@ -132,45 +216,14 @@ if (gradientSelect) {
             return;
         }
 
-        const li = document.createElement("li");
-
-        const info = document.createElement("div");
-        info.classList.add("item-info");
-
-        const span = document.createElement("span");
-        span.textContent = product;
-
-        span.addEventListener("click", function() {
-            span.classList.toggle("completed");
+        const li = createItem({
+            name: product,
+            quantity: String(quantity),
+            category,
+            completed: false
         });
-
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remove";
-        removeBtn.classList.add("remove-btn");
-
-        removeBtn.addEventListener("click", function() {
-            li.remove();
-        });
-
-        const meta = document.createElement("div");
-        meta.classList.add("item-meta");
-
-        const qtyBadge = document.createElement("span");
-        qtyBadge.classList.add("badge");
-        qtyBadge.textContent = `x${quantity}`;
-
-        const catBadge = document.createElement("span");
-        catBadge.classList.add("badge", "badge-category");
-        catBadge.textContent = category;
-
-        meta.appendChild(qtyBadge);
-        meta.appendChild(catBadge);
-        info.appendChild(span);
-        info.appendChild(meta);
-        info.appendChild(removeBtn);
-
-        li.appendChild(info);
         list.appendChild(li);
+        saveList();
 
         input.value = "";
         if (quantityInput) quantityInput.value = "1";
