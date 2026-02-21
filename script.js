@@ -1,7 +1,7 @@
     const input = document.getElementById("productInput");
     const addBtn = document.getElementById("addBtn");
     const list = document.getElementById("shoppingList");
-    const settingsBtn = document.getElementById("settingsBtn");
+const settingsBtn = document.getElementById("settingsBtn");
 const settingsPanel = document.getElementById("settingsPanel");
 const gradientSelect = document.getElementById("gradientSelect");
 
@@ -61,30 +61,56 @@ function applyGradient(key) {
     const theme = gradients[key];
     if (!theme) return;
 
-        document.documentElement.style.setProperty("--page-gradient", theme.page);
-        document.documentElement.style.setProperty("--card-gradient", theme.card);
+    document.documentElement.style.setProperty("--page-gradient", theme.page);
+    document.documentElement.style.setProperty("--card-gradient", theme.card);
     document.documentElement.style.setProperty("--accent", theme.accent);
     document.documentElement.style.setProperty("--accent-text", theme.accentText);
     document.documentElement.style.setProperty("--card-text", theme.text);
 }
 
+function getSavedGradient() {
+    try {
+        return localStorage.getItem("shoppingGradient");
+    } catch (error) {
+        return sessionStorage.getItem("shoppingGradient");
+    }
+}
+
+function saveGradient(value) {
+    try {
+        localStorage.setItem("shoppingGradient", value);
+    } catch (error) {
+        sessionStorage.setItem("shoppingGradient", value);
+    }
+}
+
+if (settingsBtn && settingsPanel) {
     settingsBtn.addEventListener("click", function() {
         settingsPanel.classList.toggle("is-open");
         const isOpen = settingsPanel.classList.contains("is-open");
         settingsPanel.setAttribute("aria-hidden", String(!isOpen));
     });
-
-gradientSelect.addEventListener("change", function() {
-    const nextValue = gradientSelect.value;
-    applyGradient(nextValue);
-    localStorage.setItem("shoppingGradient", nextValue);
-});
-
-const savedGradient = localStorage.getItem("shoppingGradient");
-if (savedGradient && gradients[savedGradient]) {
-    gradientSelect.value = savedGradient;
 }
-applyGradient(gradientSelect.value);
+
+if (gradientSelect) {
+    gradientSelect.addEventListener("change", function() {
+        const nextValue = gradientSelect.value;
+        applyGradient(nextValue);
+        saveGradient(nextValue);
+    });
+
+    gradientSelect.addEventListener("input", function() {
+        const nextValue = gradientSelect.value;
+        applyGradient(nextValue);
+        saveGradient(nextValue);
+    });
+
+    const savedGradient = getSavedGradient();
+    if (savedGradient && gradients[savedGradient]) {
+        gradientSelect.value = savedGradient;
+    }
+    applyGradient(gradientSelect.value);
+}
 
     function addProduct() {
         const product = input.value.trim();
@@ -117,3 +143,4 @@ applyGradient(gradientSelect.value);
 
         input.value = "";
     }
+
