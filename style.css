@@ -256,7 +256,7 @@
     body {
         align-items: flex-start;
         padding: 130px 16px 40px;
-        height: auto;
+        
         min-height: 100vh;
     }
 
