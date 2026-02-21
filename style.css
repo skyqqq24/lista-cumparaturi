@@ -152,6 +152,8 @@ li span {
     padding: 8px 14px;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(255, 77, 109, 0.35);
+    grid-area: remove;
+    justify-self: end;
 }
 
 .remove-btn:hover {
@@ -211,17 +213,25 @@ li span {
 }
 
 li .item-info {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "name name"
+        "meta remove";
     gap: 10px;
     flex: 1;
 }
 
+.item-info > span {
+    grid-area: name;
+}
+
 .item-meta {
     display: grid;
-    grid-template-columns: 120px minmax(160px, 1fr) auto;
+    grid-template-columns: 120px minmax(160px, 1fr);
     gap: 10px;
     align-items: center;
+    grid-area: meta;
 }
 
 .badge {
@@ -245,7 +255,7 @@ li .item-info {
 @media (max-width: 600px) {
     body {
         align-items: flex-start;
-        padding: 20px 14px 40px;
+        padding: 80px 14px 40px;
         height: auto;
         min-height: 100vh;
     }
@@ -308,3 +318,12 @@ li .item-info {
         border-radius: 22px;
     }
 }
+    li .item-info {
+        grid-template-areas:
+            "name remove"
+            "meta meta";
+    }
+
+    .remove-btn {
+        justify-self: end;
+    }
