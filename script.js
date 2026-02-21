@@ -8,16 +8,12 @@ const container = document.querySelector(".container");
 const quantityInput = document.getElementById("quantityInput");
 const categorySelect = document.getElementById("categorySelect");
 
-if (addBtn) {
-    addBtn.addEventListener("click", addProduct);
-}
-if (input) {
-    input.addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-            addProduct();
-        }
-    });
-}
+addBtn.addEventListener("click", addProduct);
+input.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        addProduct();
+    }
+});
 
 const gradients = {
     blueGreen: {
@@ -126,45 +122,26 @@ if (gradientSelect) {
     applyGradient(gradientSelect.value);
 }
 
-function saveList() {
-    if (!list) return;
-    const items = Array.from(list.querySelectorAll("li")).map((li) => {
-        const nameEl = li.querySelector(".item-info > span");
-        const qtyEl = li.querySelector(".badge");
-        const catEl = li.querySelector(".badge-category");
-        return {
-            name: nameEl ? nameEl.textContent : "",
-            quantity: qtyEl ? qtyEl.textContent.replace("x", "") : "1",
-            category: catEl ? catEl.textContent : "General",
-            completed: nameEl ? nameEl.classList.contains("completed") : false
-        };
-    });
-    try {
-        localStorage.setItem("shoppingItems", JSON.stringify(items));
-    } catch (error) {
-        try {
-            sessionStorage.setItem("shoppingItems", JSON.stringify(items));
-        } catch (innerError) {
-            // storage unavailable
-        }
-    }
-}
+function addProduct() {
+    const product = input.value.trim();
+    const quantity = Math.max(1, parseInt(quantityInput ? quantityInput.value : "1", 10) || 1);
+    const category = categorySelect ? categorySelect.value : "General";
 
-function createItem({ name, quantity, category, completed }) {
+    if (product === "") {
+        alert("Introdu un produs!");
+        return;
+    }
+
     const li = document.createElement("li");
 
     const info = document.createElement("div");
     info.classList.add("item-info");
 
     const span = document.createElement("span");
-    span.textContent = name;
-    if (completed) {
-        span.classList.add("completed");
-    }
+    span.textContent = product;
 
     span.addEventListener("click", function() {
         span.classList.toggle("completed");
-        saveList();
     });
 
     const removeBtn = document.createElement("button");
@@ -173,7 +150,6 @@ function createItem({ name, quantity, category, completed }) {
 
     removeBtn.addEventListener("click", function() {
         li.remove();
-        saveList();
     });
 
     const meta = document.createElement("div");
@@ -194,50 +170,8 @@ function createItem({ name, quantity, category, completed }) {
     info.appendChild(removeBtn);
 
     li.appendChild(info);
-    return li;
+    list.appendChild(li);
+
+    input.value = "";
+    if (quantityInput) quantityInput.value = "1";
 }
-
-function loadList() {
-    try {
-        const raw = localStorage.getItem("shoppingItems") || sessionStorage.getItem("shoppingItems");
-        if (!raw) return;
-        const items = JSON.parse(raw);
-        if (!Array.isArray(items)) return;
-        items.forEach((item) => {
-            const li = createItem({
-                name: item.name || "",
-                quantity: item.quantity || "1",
-                category: item.category || "General",
-                completed: Boolean(item.completed)
-            });
-            list.appendChild(li);
-        });
-    } catch (error) {
-        // ignore corrupted storage
-    }
-}
-
-loadList();
-
-function addProduct() {
-        const product = input.value.trim();
-        const quantity = Math.max(1, parseInt(quantityInput ? quantityInput.value : "1", 10) || 1);
-        const category = categorySelect ? categorySelect.value : "General";
-
-        if (product === "") {
-            alert("Introdu un produs!");
-            return;
-        }
-
-        const li = createItem({
-            name: product,
-            quantity: String(quantity),
-            category,
-            completed: false
-        });
-        list.appendChild(li);
-        saveList();
-
-        input.value = "";
-        if (quantityInput) quantityInput.value = "1";
-    }
