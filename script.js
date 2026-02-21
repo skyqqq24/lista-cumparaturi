@@ -1,4 +1,4 @@
-\const input = document.getElementById("productInput");
+const input = document.getElementById("productInput");
 const addBtn = document.getElementById("addBtn");
 const list = document.getElementById("shoppingList");
 const settingsBtn = document.getElementById("settingsBtn");
@@ -8,12 +8,16 @@ const container = document.querySelector(".container");
 const quantityInput = document.getElementById("quantityInput");
 const categorySelect = document.getElementById("categorySelect");
 
+if (addBtn) {
     addBtn.addEventListener("click", addProduct);
+}
+if (input) {
     input.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
             addProduct();
         }
     });
+}
 
 const gradients = {
     blueGreen: {
@@ -123,6 +127,7 @@ if (gradientSelect) {
 }
 
 function saveList() {
+    if (!list) return;
     const items = Array.from(list.querySelectorAll("li")).map((li) => {
         const nameEl = li.querySelector(".item-info > span");
         const qtyEl = li.querySelector(".badge");
@@ -134,7 +139,15 @@ function saveList() {
             completed: nameEl ? nameEl.classList.contains("completed") : false
         };
     });
-    localStorage.setItem("shoppingItems", JSON.stringify(items));
+    try {
+        localStorage.setItem("shoppingItems", JSON.stringify(items));
+    } catch (error) {
+        try {
+            sessionStorage.setItem("shoppingItems", JSON.stringify(items));
+        } catch (innerError) {
+            // storage unavailable
+        }
+    }
 }
 
 function createItem({ name, quantity, category, completed }) {
@@ -186,7 +199,7 @@ function createItem({ name, quantity, category, completed }) {
 
 function loadList() {
     try {
-        const raw = localStorage.getItem("shoppingItems");
+        const raw = localStorage.getItem("shoppingItems") || sessionStorage.getItem("shoppingItems");
         if (!raw) return;
         const items = JSON.parse(raw);
         if (!Array.isArray(items)) return;
