@@ -254,48 +254,48 @@
 
 @media (max-width: 600px) {
     body {
-        align-items: flex-start;
-        padding: 1180px 16px 40px;
-        height: auto;
+        align-items: center;
+        padding: 24px 16px 40px;
+        height: 100vh;
         min-height: 100vh;
     }
 
     .container {
         width: 100%;
-        max-width: 560px;
-        padding: 26px 18px;
-        border-radius: 18px;
-        margin-top: 20px;
+        max-width: 640px;
+        padding: 36px 28px;
+        border-radius: 22px;
+        margin-top: 0;
     }
 
-        .input-group {
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
+    .input-group {
+        grid-template-columns: minmax(220px, 2.2fr) minmax(90px, 0.8fr) minmax(140px, 1fr) minmax(110px, 0.8fr);
+        gap: 12px;
+    }
 
-        .input-group button {
-            width: 100%;
-        }
+    .input-group button {
+        width: auto;
+    }
 
-        h2 {
-            font-size: 24px;
-            margin-bottom: 18px;
-        }
+    h2 {
+        font-size: 26px;
+        margin-bottom: 22px;
+    }
 
-        input {
-            font-size: 18px;
-            padding: 14px 16px;
-        }
+    input {
+        font-size: 16px;
+        padding: 12px 14px;
+    }
 
-        button {
-            font-size: 16px;
-            padding: 14px 18px;
-        }
+    button {
+        font-size: 16px;
+        padding: 12px 16px;
+    }
 
-        li {
-            padding: 12px 14px;
-            font-size: 18px;
-        }
+    li {
+        padding: 12px 14px;
+        font-size: 16px;
+    }
 
     .settings-btn {
         width: 52px;
@@ -306,30 +306,23 @@
         z-index: 5;
     }
 
-        .settings-panel {
-            top: 76px;
-            right: 14px;
-            min-width: 200px;
-        }
+    .settings-panel {
+        top: 76px;
+        right: 14px;
+        min-width: 200px;
+    }
 
-        li .item-info {
-            grid-template-areas:
-                "name remove"
-                "meta meta";
-            gap: 8px;
-        }
+    li .item-info {
+        grid-template-areas:
+            "name name"
+            "meta remove";
+        gap: 10px;
+    }
 
-        .item-meta {
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .badge,
-        .remove-btn {
-            min-height: 40px;
-            padding: 8px 12px;
-            font-size: 14px;
-        }
+    .item-meta {
+        grid-template-columns: 120px minmax(140px, 1fr);
+        gap: 10px;
+    }
     }
 
     @media (min-width: 1000px) {
