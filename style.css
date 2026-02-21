@@ -255,7 +255,7 @@ li .item-info {
 @media (max-width: 600px) {
     body {
         align-items: flex-start;
-        padding: 70px 16px 40px;
+        padding: 110px 16px 40px;
         height: auto;
         min-height: 100vh;
     }
@@ -337,12 +337,3 @@ li .item-info {
         border-radius: 22px;
     }
 }
-    li .item-info {
-        grid-template-areas:
-            "name remove"
-            "meta meta";
-    }
-
-    .remove-btn {
-        justify-self: end;
-    }
