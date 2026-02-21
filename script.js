@@ -165,9 +165,9 @@ if (gradientSelect) {
 
         meta.appendChild(qtyBadge);
         meta.appendChild(catBadge);
-        meta.appendChild(removeBtn);
         info.appendChild(span);
         info.appendChild(meta);
+        info.appendChild(removeBtn);
 
         li.appendChild(info);
         list.appendChild(li);
