@@ -144,6 +144,14 @@ if (gradientSelect) {
             span.classList.toggle("completed");
         });
 
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.classList.add("remove-btn");
+
+        removeBtn.addEventListener("click", function() {
+            li.remove();
+        });
+
         const meta = document.createElement("div");
         meta.classList.add("item-meta");
 
@@ -157,19 +165,11 @@ if (gradientSelect) {
 
         meta.appendChild(qtyBadge);
         meta.appendChild(catBadge);
+        meta.appendChild(removeBtn);
         info.appendChild(span);
         info.appendChild(meta);
 
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remove";
-        removeBtn.classList.add("remove-btn");
-
-        removeBtn.addEventListener("click", function() {
-            li.remove();
-        });
-
         li.appendChild(info);
-        li.appendChild(removeBtn);
         list.appendChild(li);
 
         input.value = "";
