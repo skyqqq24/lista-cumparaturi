@@ -4,6 +4,7 @@
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsPanel = document.getElementById("settingsPanel");
 const gradientSelect = document.getElementById("gradientSelect");
+const container = document.querySelector(".container");
 
     addBtn.addEventListener("click", addProduct);
     input.addEventListener("keypress", function(e) {
@@ -35,21 +36,21 @@ const gradients = {
         text: "#ffffff"
     },
     purplePink: {
-        page: "linear-gradient(135deg, #a18cd1, #fbc2eb)",
+        page: "linear-gradient(135deg, #9b6bff, #ff8dd8)",
         card: "linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.18))",
         accent: "#ffffff",
         accentText: "#6b3e8f",
         text: "#2b1f3a"
     },
     tealGold: {
-        page: "linear-gradient(135deg, #1f4037, #99f2c8)",
+        page: "linear-gradient(135deg, #0fb9b1, #f5c542)",
         card: "linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12))",
         accent: "#ffffff",
-        accentText: "#1f4037",
-        text: "#0f2a23"
+        accentText: "#0c6f6a",
+        text: "#0f2a2a"
     },
     sunset: {
-        page: "linear-gradient(135deg, #ee0979, #ff6a00)",
+        page: "linear-gradient(135deg, #ff416c, #ff8a00)",
         card: "linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08))",
         accent: "#ffffff",
         accentText: "#7a1d2c",
@@ -66,6 +67,13 @@ function applyGradient(key) {
     document.documentElement.style.setProperty("--accent", theme.accent);
     document.documentElement.style.setProperty("--accent-text", theme.accentText);
     document.documentElement.style.setProperty("--card-text", theme.text);
+
+    // Fallback for mobile browsers that don't update CSS variables reliably
+    document.body.style.background = theme.page;
+    if (container) {
+        container.style.background = theme.card;
+        container.style.color = theme.text;
+    }
 }
 
 function getSavedGradient() {
@@ -143,4 +151,3 @@ if (gradientSelect) {
 
         input.value = "";
     }
-
