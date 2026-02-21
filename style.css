@@ -255,7 +255,7 @@
 @media (max-width: 600px) {
     body {
         align-items: flex-start;
-        padding: 1180px 16px 40px;
+        padding: 600px 16px 40px;
         height: auto;
         min-height: 100vh;
     }
